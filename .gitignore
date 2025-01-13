@@ -1,0 +1,10 @@
+# Ignorar todos os arquivos XML
+*.xml
+
+# Ignorar todos os arquivos IML
+*.iml
+
+# Ignorar o próprio .gitignore
+# .gitignore
+
+.idea/
