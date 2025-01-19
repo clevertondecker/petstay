@@ -1,10 +1,13 @@
-# Ignorar todos os arquivos XML
+# Ignore all XML
 *.xml
 
-# Ignorar todos os arquivos IML
+# Ignore all files IML
 *.iml
 
-# Ignorar o próprio .gitignore
-# .gitignore
-
 .idea/
+
+#Ignore .env because contains sensitive data.
+*.envi
+*.env
+
+*go.sum

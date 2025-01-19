@@ -10,6 +10,10 @@ type Owner struct {
 	Address string
 }
 
+type OwnerRepository interface {
+	Save(owner *Owner) error
+}
+
 func (o Owner) Display() string {
 	return fmt.Sprintf("Owner ID: %d, Name: %s, Email: %s, Phone: %s",
 		o.ID, o.Name, o.Email, o.Phone)

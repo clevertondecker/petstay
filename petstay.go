@@ -2,54 +2,36 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"petstay/domain"
-	"time"
+	"petstay/infra"
+	"petstay/service"
 )
 
 func main() {
-	// Criando uma instância de Owner (Dono)
-	owner := domain.Owner{
-		ID:      1,
-		Name:    "Carlos",
-		Email:   "carlos@email.com",
-		Phone:   "1234567890",
-		Address: "Rua XYZ, 123",
+	// Inicializa a conexão com o banco de dados
+	infra.InitDB()
+	db := infra.GetDB()
+
+	// Cria o repositório e o serviço
+	ownerRepo := infra.NewOwnerRepository(db)
+	ownerService := service.OwnerService{
+		Repo: ownerRepo,
 	}
 
-	// Criando uma instância de PetSitter (Cuidador)
-	petSitter := domain.PetSitter{
-		ID:              1,
-		Name:            "João",
-		Rating:          4.5,
-		ExperienceLevel: "Expert",
+	// Cria um novo Owner
+	owner := &domain.Owner{
+		Name:    "John Doe",
+		Email:   "john.doe@example.com",
+		Phone:   "123-456-7890",
+		Address: "123 Main St",
 	}
 
-	// Criando uma instância de Pet
-	pet := domain.Pet{
-		ID:           1,
-		Name:         "Rex",
-		Species:      domain.Dog,
-		Age:          5,
-		SpecialNeeds: "None",
+	// Tenta salvar o Owner
+	if err := ownerService.Save(owner); err != nil {
+		log.Fatalf("Erro ao salvar Owner: %v", err)
 	}
 
-	// Criando uma instância de Booking (Reserva)
-	startDate := time.Now()
-	endDate := startDate.Add(48 * time.Hour) // Exemplo de 2 dias de reserva
-
-	booking := domain.Booking{
-		ID:        1,
-		Pet:       pet,
-		Owner:     owner,
-		PetSitter: petSitter,
-		StartDate: startDate,
-		EndDate:   endDate,
-		Status:    "Confirmed",
-	}
-
-	// Exibindo as informações
-	fmt.Println(owner.Display())
-	fmt.Println(pet.Display())
-	fmt.Println(petSitter.Display())
-	fmt.Println(booking.Display())
+	// Exibe a resposta
+	fmt.Printf("Owner salvo com sucesso: %s\n", owner.Display())
 }
