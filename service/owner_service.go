@@ -9,7 +9,7 @@ type OwnerService struct {
 	Repo domain.OwnerRepository
 }
 
-// Create a new owner
+// Create a new owner.
 func (s *OwnerService) Save(owner *domain.Owner) error {
 	if owner.Name == "" || owner.Email == "" {
 		return fmt.Errorf("campos obrigatórios estão vazios: Name e Email são obrigatórios")
@@ -29,7 +29,7 @@ func (s *OwnerService) Save(owner *domain.Owner) error {
 	return nil
 }
 
-// Função auxiliar para verificar a presença de uma substring no email
+// Helper function to check for the presence of a substring in the email.
 func contains(str, substr string) bool {
 	return len(str) >= len(substr) && len(substr) > 0 && (str[:len(substr)] == substr || contains(str[1:], substr))
 }
